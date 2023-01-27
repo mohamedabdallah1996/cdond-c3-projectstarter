@@ -396,33 +396,33 @@ jobs:
         when: on_fail
 
   cloudfront-update:
-    docker:
-      # Docker image here that supports AWS CLI
-      - image: amazon/aws-cli
-    executor: aws
-    steps:
-      # Checkout code from git
-      - checkout 
-      - run:
-          name: Install dependencies
-          command: |
-            # your code here
-            yum install -y tar gzip curl
-            curl -sL https://rpm.nodesource.com/setup_10.x | bash -
-            yum install -y nodejs
-      - run:
-          name: Update cloudfront distribution
-          working_directory: ./.circleci/files
-          command: |
-            aws cloudformation deploy \
-              --template-file cloudfront.yaml \
-              --stack-name udapeople-cloudfront-production \
-              --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
-              --tags project=udapeople
-      # Here's where you will add some code to rollback on failure  
-      - revert_migrations:
-          id: ${CIRCLE_WORKFLOW_ID:0:7}
-          when: on_fail
+      docker:
+        # Docker image here that supports AWS CLI
+        - image: amazon/aws-cli
+      executor: aws
+      steps:
+          # Checkout code from git
+          - checkout 
+          - run:
+              name: Install dependencies
+              command: |
+                  # your code here
+                  yum install -y tar gzip curl
+                  curl -sL https://rpm.nodesource.com/setup_10.x | bash -
+                  yum install -y nodejs
+          - run:
+              name: Update cloudfront distribution
+              working_directory: ./.circleci/files
+              command: |
+                  aws cloudformation deploy \
+                    --template-file cloudfront.yaml \
+                    --stack-name udapeople-cloudfront-production \
+                    --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
+                    --tags project=udapeople
+          # Here's where you will add some code to rollback on failure  
+          - revert_migrations:
+              id: ${CIRCLE_WORKFLOW_ID:0:7}
+              when: on_fail
 cleanup:
     docker:
       # Docker image here

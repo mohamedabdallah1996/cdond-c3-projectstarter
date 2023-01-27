@@ -254,8 +254,8 @@ jobs:
               curl -H "Content-Type: text/plain" -H "token: 2a9e15d6-b9fa-4b1f-a5dc-e3b9643a9b63" --request PUT --data "failure" https://api.memstash.io/values/DB_MIGRATION_${CIRCLE_WORKFLOW_ID:0:7}
             fi
             echo "WorkflowID=${CIRCLE_WORKFLOW_ID:0:7}"
-     # Here's where you will add some code to rollback on failure    
-    - destroy-environment:
+      # Here's where you will add some code to rollback on failure    
+      - destroy-environment:
 
   deploy-frontend:
     docker:

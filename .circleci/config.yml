@@ -138,6 +138,7 @@ jobs:
             npm audit fix
             # npm install minimist@latest
             npm rm jest --force
+            npm rm webpack --force
             npm rm webpack-dev-server --force
             npm rm webpack-cli --force
             npm rm loader-utils --force

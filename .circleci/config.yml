@@ -135,9 +135,9 @@ jobs:
             npm install
             # npm install oauth-sign@^0.9.0
             # npm audit fix --audit-level=critical --force
-            npm rm minimist --force
             npm audit fix
             # npm install minimist@latest
+            npm rm minimist --force
             npm audit --audit-level=critical
 
   scan-backend:

@@ -152,9 +152,17 @@ jobs:
           name: back-end scan
           command: |
             cd backend
-            npm install
-            # npm install oauth-sign@^0.9.0
-            npm audit fix --audit-level=critical --force
+            # npm install
+            # # npm install oauth-sign@^0.9.0
+            # npm audit fix --audit-level=critical --force
+            # npm audit --audit-level=critical
+            npm i
+            npm install class-validator@latest
+            npm install @nestjs/platform-express@latest
+            npm install nodemon@latest --save-dev
+            npm audit fix --force
+            npm audit fix --force
+            npm install typeorm@latest --force
             npm audit --audit-level=critical
 
   deploy-infrastructure:

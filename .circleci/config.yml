@@ -435,6 +435,8 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - install_aws_cli
+      - install_nodejs
       - run:
           name: Install dependencies
           working_directory: /tmp
@@ -472,14 +474,17 @@ jobs:
             fi
       # Here's where you will add some code to rollback on failure  
       - destroy-environment
+      - revert-migrations
 
   cloudfront-update:
       docker:
         # Docker image here that supports AWS CLI
-        - image: amazon/aws-cli
+        - image: cimg/base:stable
       steps:
           # Checkout code from git
           - checkout 
+          - install_aws_cli
+          - install_nodejs
           - run:
               name: Install dependencies
               command: |
@@ -498,8 +503,8 @@ jobs:
                     --parameter-overrides WorkflowID="${CIRCLE_WORKFLOW_ID:0:7}" \
                     --tags project=udapeople
           # Here's where you will add some code to rollback on failure  
-          - revert-migrations:
-              id: ${CIRCLE_WORKFLOW_ID:0:7}
+          - destroy-environment
+          - revert-migrations
 
   cleanup:
     docker:
@@ -508,6 +513,8 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
+      - install_aws_cli
+      - install_nodejs
       - run:
           name: Get old stack workflow id
           command: |
@@ -564,8 +571,8 @@ workflows:
           # requires: [run-migrations]
       - deploy-backend
           # requires: [run-migrations]
-      - smoke-test:
-          requires: [deploy-backend, deploy-frontend]
+      - smoke-test
+          # requires: [deploy-backend, deploy-frontend]
       - cloudfront-update:
           requires: [smoke-test]
       - cleanup:

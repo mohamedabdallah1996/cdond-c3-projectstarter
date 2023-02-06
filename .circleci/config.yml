@@ -286,14 +286,8 @@ jobs:
           command: |
             # Your code here
             cd backend
+            npm cache clean --force
             npm i
-            npm install class-validator@latest
-            npm install @nestjs/platform-express@latest
-            npm install nodemon@latest --save-dev
-            npm audit fix --force
-            npm audit fix --force
-            npm install typeorm@latest --force
-            npm audit --audit-level=critical
             npm run migrations > migration_status
       - run:
           name: Send migration results to memstash
